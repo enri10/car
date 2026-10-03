@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "carmvp"
+version = "0.1.0"
+description = "Parse, normalize, and transparently score car.gr-style car listings."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[project.scripts]
+carmvp = "carmvp.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
