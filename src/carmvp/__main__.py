@@ -43,11 +43,21 @@ def cmd_demo(args: argparse.Namespace) -> int:
 
 
 def cmd_evaluate(args: argparse.Namespace) -> int:
-    text = _read_input(args.file)
-    if args.format == "json":
-        listings = parse_json_listings(text)
-    else:
-        listings = parse_html_listings(text)
+    try:
+        text = _read_input(args.file)
+    except OSError as exc:
+        print(f"Could not read input: {exc}", file=sys.stderr)
+        return 1
+
+    try:
+        if args.format == "json":
+            listings = parse_json_listings(text)
+        else:
+            listings = parse_html_listings(text)
+    except ValueError as exc:
+        print(f"Could not parse {args.format} input: {exc}", file=sys.stderr)
+        return 1
+
     if not listings:
         print("No listings found in input.", file=sys.stderr)
         return 1
